@@ -1,0 +1,20 @@
+@media screen and (min-width: map-get($grid-breakpoints, md)) {
+  nav.navbar {
+    display: none;
+  }
+  .header {
+    background-color: var(--ds-header-bg);
+  }
+}
+
+.navbar-brand img {
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    width: 100px; //NU-edit
+   height: 95px; //NU-edit
+  }
+}
+.navbar-toggler .navbar-toggler-icon {
+  background-image: none !important;
+  line-height: 1.5;
+  color: var(--bs-link-color);
+}

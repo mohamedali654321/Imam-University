@@ -1,0 +1,24 @@
+<ds-truncatable-part [maxLines]="1" [background]="isCurrent() ? 'primary' : 'default'">
+  <!-- kware edit
+           call getStringByLocale to separate string br bar '|'  -->
+  <div [ngClass]="isCurrent() ? 'text-light' : 'text-body'"
+  
+       [innerHTML]="(parentTitle$ && parentTitle$ | async) ?  localeService.getStringByLocale((parentTitle$ | async))  : ('home.breadcrumbs' | translate)"></div>
+       <!-- end kawre edit -->
+</ds-truncatable-part>
+<ds-truncatable-part *ngIf="title" [maxLines]="1" [background]="isCurrent() ? 'primary' : 'default'">
+  <!-- kware edit
+           call getStringByLocale to separate string br bar '|'  -->
+  <div class="font-weight-bold"
+       [ngClass]="isCurrent() ? 'text-light' : 'text-primary'"
+       [innerHTML]="localeService.getStringByLocale(title)"></div>
+       <!-- end kawre edit -->
+</ds-truncatable-part>
+<ds-truncatable-part *ngIf="description" [maxLines]="1" [background]="isCurrent() ? 'primary' : 'default'">
+  <!-- kware edit
+           call getStringByLocale to separate string br bar '|'  -->
+  <div class="text-secondary"
+       [ngClass]="isCurrent() ? 'text-light' : 'text-secondary'"
+       [innerHTML]="localeService.getStringByLocale(description)"></div>
+       <!-- end kawre edit -->
+</ds-truncatable-part>

@@ -1,0 +1,62 @@
+<div class="background-image">
+  <!-- <ds-carousel [images]="images" [autoSlide]="true" [slideInterval]="3000"></ds-carousel> -->
+
+
+
+  <div *ngIf="images && images.length > 0 " class="carousel-container">
+    <img *ngFor="let image of images ; let i= index"
+     [src]="image.imageSrc" [alt]="image.imageAlt" class="fadeImg"
+    [ngClass]="{'image-active': selectedIndex === i }"
+    
+    >
+    <div *ngIf="indicator" class="carousel-dot-container">
+        <span *ngFor="let dot of images; let i=index" class="dot" [ngClass]="{'active': selectedIndex === i }"
+        (click)="selectImage(i)"
+        ></span>
+    
+    </div>
+    <div *ngIf="controls" class="carousel-btn btn-prev">
+        <i class="fas fa-arrow-circle-left icon-carousel icon-prev" (click)="onPrevClick()"></i>
+    </div>
+    <div *ngIf="controls" class="carousel-btn btn-next">
+        <i class="fas fa-arrow-circle-right icon-carousel icon-next " (click)="onNextClick()"></i>
+    </div>
+    
+    
+    
+    
+    </div>
+    
+
+ 
+
+</div>
+
+<div >
+  <div class="container" >
+  
+    <div class="jumbotron jumbotron-fluid">
+      <div class="d-flex flex-wrap">
+        <!-- kware edit
+        translate home-news screen -->
+        <div>
+          <h1  style="margin-top: -30px; font-size:3rem;margin-bottom: -20px;" class="display-3">{{ "home.news.dspace7" | translate }}</h1>
+          <!-- <p class="lead">{{ "home.news.dspace.intro.header" | translate }}</p> -->
+        </div>
+      </div>
+      <ul style="list-style:none ;margin-bottom: 20px;">
+
+        <li style="    margin-bottom: -5px;">
+          <br> <br>
+          {{ "home.news.dspace.intro.content1" | translate }}
+        </li>
+        <li style="    margin-bottom: -60px;">
+          <br> 
+          {{ "home.news.dspace.intro.content2" | translate }}
+        </li>
+       
+      </ul>
+    
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<ds-type-badge *ngIf="showLabel" [object]="dso"></ds-type-badge>
+
+<ds-truncatable [id]="dso.id" *ngIf="object !== undefined && object !== null">
+    <a *ngIf="linkType != linkTypes.None" [target]="(linkType == linkTypes.ExternalLink) ? '_blank' : '_self'" rel="noopener noreferrer"
+       [routerLink]="[itemPageRoute]" class="lead item-list-title dont-break-out"
+       [innerHTML]="localeService.getStringByLocale(dsoTitle)"></a>
+    <span *ngIf="linkType == linkTypes.None" class="lead item-list-title dont-break-out"
+          [innerHTML]="dsoTitle"></span>
+    <span class="text-muted">
+      <ds-truncatable-part [id]="dso.id" [minLines]="1">
+        <ng-container *ngIf="dso.firstMetadataValue('dc.publisher') || dso.firstMetadataValue('dc.date.issued')">
+          <!-- kware edit
+                 regxComma() put comma  -->
+          (<span *ngIf="dso.firstMetadataValue('dc.publisher')" class="item-list-publisher" [innerHTML]="localeService.getStringByLocale(firstMetadataValue('dc.publisher'))  + regxComma() "></span>
+
+          <span *ngIf="dso.firstMetadataValue('dc.date.issued')" class="item-list-date" [innerHTML]="firstMetadataValue('dc.date.issued')"></span>)
+        </ng-container>
+        <span *ngIf="dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 0" class="item-list-authors">
+          <span *ngFor="let author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']); let last=last;">
+            <!-- kware edit
+                        regxColon put semicolon 
+                       convertComma replace comma ', or ;' to '،' if language  is Arabic
+                     -->
+              <span [innerHTML]="convertComma(author)"><span [innerHTML]="convertComma(author)"></span></span>
+              <span *ngIf="!last">{{regxColon()}} </span>
+          </span>
+        </span>
+      </ds-truncatable-part>
+    </span>
+    <!-- kware edit -->
+    <div *ngIf="dso.firstMetadataValue('dc.description.abstract')" class="item-list-abstract">
+        <ds-truncatable-part [id]="dso.id" [minLines]="3"><span
+          
+                [innerHTML]="localeService.getStringByLocale(firstMetadataValue('dc.description.abstract'))"></span>
+        </ds-truncatable-part>
+    </div>
+    <!-- kware end -->
+</ds-truncatable>

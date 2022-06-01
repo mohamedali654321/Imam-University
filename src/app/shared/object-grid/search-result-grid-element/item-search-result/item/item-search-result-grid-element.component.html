@@ -1,0 +1,74 @@
+  <div class="card" [@focusShadow]="(isCollapsed$ | async)?'blur':'focus'">
+    <ds-truncatable [id]="dso.id">
+      <div class="position-absolute ml-1">
+        <ng-content></ng-content>
+      </div>
+      <a *ngIf="linkType != linkTypes.None" [target]="(linkType == linkTypes.ExternalLink) ? '_blank' : '_self'" rel="noopener noreferrer" [routerLink]="[itemPageRoute]"
+         class="card-img-top full-width">
+          <div>
+              <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
+              </ds-thumbnail>
+          </div>
+      </a>
+      <span *ngIf="linkType == linkTypes.None" class="card-img-top full-width">
+          <div>
+              <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
+              </ds-thumbnail>
+          </div>
+      </span>
+      <div class="card-body">
+          <!-- <ds-type-badge *ngIf="showLabel" [object]="dso"></ds-type-badge>  -->
+           <span class="badge badge-info" *ngIf="dso.hasMetadata('dc.type')" >{{localeService.getStringByLocale(firstMetadataValue('dc.type'))}}</span>
+          <ds-truncatable-part [id]="dso.id" [minLines]="3" type="h4">
+            
+
+            <!-- kware edit
+                       call getStringByLocale to separate string br bar '|' 
+                       
+                     -->
+            
+            <h4 class="card-title" [innerHTML]="title"></h4>
+            <!-- end kawre edit -->
+          </ds-truncatable-part>
+          <p *ngIf="dso.hasMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*'])"
+             class="item-authors card-text text-muted">
+              <ds-truncatable-part [id]="dso.id" [minLines]="1">
+                  <span *ngIf="dso.hasMetadata('dc.date.issued')" class="item-date">{{firstMetadataValue('dc.date.issued')}}</span>
+                   <!-- kware edit
+                  put comma ',' to '،' if language  is Arabic -->
+                  <span *ngFor="let author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']);">{{regxComma()}}
+                     <!-- kware edit
+                       call getStringByLocale to separate string br bar '|' 
+                       replace comma ', or ;' to '،' if language  is Arabic
+                     -->
+                    <span [innerHTML]="convertComma(localeService.getStringByLocale(author))"></span>
+                    <!-- end kawre edit -->
+                  </span>
+              </ds-truncatable-part>
+          </p>
+
+     <!-- kware-edit keywords show -->
+              
+          <div  *ngIf="dso.hasMetadata('dc.subject')"  >
+            <div class="keys-info  ">
+              <span class=" badge-info"   *ngFor="let keyword of keywords;let last=last;"><a  style="white-space: -webkit-nowrap !important;"  href="/search?query=&f.subject={{keyword}},equals" title="{{keyword}}">{{keyword}}</a><span style="color:#207698 ;" *ngIf="!last"> • </span> </span>
+            </div>
+            
+
+          </div>
+          <p *ngIf="dso.hasMetadata('dc.description.abstract')" class="item-abstract card-text">
+              <ds-truncatable-part [id]="dso.id" [minLines]="3">
+                   <!-- kware edit
+                       call getStringByLocale to separate string br bar '|'  -->
+                <span [innerHTML]="localeService.getStringByLocale(firstMetadataValue('dc.description.abstract'))"></span>
+                <!-- end kawre edit -->
+              </ds-truncatable-part>
+          </p>
+          <div *ngIf="linkType != linkTypes.None" class="text-center">
+              <a [target]="(linkType == linkTypes.ExternalLink) ? '_blank' : '_self'" rel="noopener noreferrer" [routerLink]="[itemPageRoute]"
+                 class="lead btn btn-primary viewButton">{{'item-search-result.button-view' | translate}}</a>
+          </div>
+      </div>
+    </ds-truncatable>
+    <ng-content></ng-content>
+  </div>

@@ -1,0 +1,38 @@
+import { Component } from '@angular/core';
+import { MetadataRepresentation } from '../../../core/shared/metadata-representation/metadata-representation.model';
+
+@Component({
+  selector: 'ds-metadata-representation-list-element',
+  template: ''
+})
+/**
+ * An abstract class for displaying a single MetadataRepresentation
+ */
+export class MetadataRepresentationListElementComponent {
+  /**
+   * The metadata representation of this component
+   */
+  metadataRepresentation: MetadataRepresentation;
+
+    //  kware edit 
+    //  author search link
+  filterSearch() {
+    return '/search?query=&f.author='+this.metadataRepresentation.getValue()+',equals';
+  }
+    //  change comma based on author name
+  checkAuthor(author : string) :string {
+    const arabicRange = /[\u0600-\u06FF]/;
+    const isTrue = arabicRange.test(author);
+   
+    if (isTrue) {
+      var regx = /,/gi;
+      var newAuthor = author.replace(regx, "،");
+      return newAuthor
+    }
+    else{
+        return author
+    }
+  }
+
+//  end kware edit
+}
